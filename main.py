@@ -6,12 +6,13 @@ from PyQt5.QtGui import QPainter, QColor, QPainterPath, QMouseEvent, QCursor, \
     QScreen
 from PyQt5.QtWidgets import QApplication, QMainWindow
 from PyQt5 import uic
+from UI import Ui_MainWindow
 
 
-class Example(QMainWindow):
+class Example(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
-        uic.loadUi("UI.ui", self)
+        self.setupUi(self)
         self.pushButton.clicked.connect(self.paint)
         self.do_paint = False
 
@@ -23,10 +24,10 @@ class Example(QMainWindow):
             qp.end()
 
     def draw_circle(self, qp):
-        qp.setBrush(QColor(255, 186, 0))
         # (x1 - x2) ** 2 + (y1 - y2) ** 2 > (r1 + r2) ** 2
         src = []
         for i in range(random.randint(2, 5)):
+            qp.setBrush(QColor(*[random.randint(0, 255) for i in range(3)]))
             data = [random.randint(10, self.height() // 3),
                     random.randint(10, self.width()) // 3]
             x1, y1 = data
